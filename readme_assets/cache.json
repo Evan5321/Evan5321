@@ -1,0 +1,88 @@
+{
+  "generated_at": "2026-11-18T14:52:44+00:00",
+  "user": {
+    "login": "Evan5321",
+    "name": "Evan Lai",
+    "created_at": "2025-05-03T14:25:54Z"
+  },
+  "totals": {
+    "repos": 8,
+    "stars": 3,
+    "forks": 0,
+    "followers": 0,
+    "commits": 37
+  },
+  "languages": {
+    "repos": {
+      "Java": 1,
+      "Jupyter Notebook": 1,
+      "TypeScript": 1,
+      "Python": 2
+    },
+    "bytes": {
+      "Java": 51103,
+      "C++": 39183,
+      "TeX": 36432,
+      "PLpgSQL": 8079,
+      "C": 1931,
+      "Jupyter Notebook": 175158,
+      "Python": 251999,
+      "TypeScript": 215275,
+      "CSS": 3601,
+      "JavaScript": 4056,
+      "Rust": 119,
+      "HTML": 43712
+    }
+  },
+  "projects": [
+    {
+      "name": "Eavn5321",
+      "description": "",
+      "language": "",
+      "stars": 0,
+      "updated_at": "2026-11-18T14:39:06Z"
+    },
+    {
+      "name": "Notes",
+      "description": "",
+      "language": "Java",
+      "stars": 1,
+      "updated_at": "2026-11-18T10:36:35Z"
+    },
+    {
+      "name": "MLLearningDatabase",
+      "description": "",
+      "language": "Jupyter Notebook",
+      "stars": 1,
+      "updated_at": "2026-10-09T08:24:31Z"
+    },
+    {
+      "name": "ClipPoems",
+      "description": "",
+      "language": "TypeScript",
+      "stars": 1,
+      "updated_at": "2026-10-02T12:37:35Z"
+    },
+    {
+      "name": "ai-market-sim-finance",
+      "description": "",
+      "language": "Python",
+      "stars": 0,
+      "updated_at": "2026-10-02T12:36:23Z"
+    },
+    {
+      "name": "CaiMa-OpenCV",
+      "description": "",
+      "language": "",
+      "stars": 0,
+      "updated_at": "2026-09-11T15:05:55Z"
+    },
+    {
+      "name": "QuizSys",
+      "description": "",
+      "language": "Python",
+      "stars": 0,
+      "updated_at": "2025-06-28T02:48:36Z"
+    }
+  ]
+}

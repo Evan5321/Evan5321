@@ -1,0 +1,15 @@
+# 预览/截图产物（由 readme_assets/preview.py 生成，不入库）
+readme_assets/_*
+readme_assets/*.png
+readme_assets/_cache/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# 编辑器
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
