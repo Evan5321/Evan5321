@@ -99,9 +99,6 @@
   <img src="readme_assets/card-overview.svg" width="680" alt="codebase overview" />
 </p>
 
-这些数字直接来自 GitHub API：公开仓库数、Star 数、提交数，以及按代码字节统计的语言构成。
-私有仓库和本地项目不计入，所以它更像一份「公开可见的脚印」。
-
 <p align="center">
   <img src="https://img.shields.io/github/last-commit/Evan5321/Notes?style=flat-square&color=22d3ee&labelColor=0b1220&label=last%20commit" alt="last commit" />
   <img src="https://img.shields.io/github/stars/Evan5321?style=flat-square&color=a78bfa&labelColor=0b1220&label=stars" alt="stars" />
