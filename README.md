@@ -17,51 +17,21 @@
 </p>
 
 <p align="center">
-  <a href="#collab">LLM 协同</a> · <a href="#agent">Agent 流程控制</a> · <a href="#projects">精选项目</a> · <a href="#stack">技术栈</a> · <a href="#codebase">代码构成</a>
+  <a href="#highlights">能力概览</a> · <a href="#projects">精选项目</a> · <a href="#stack">技术栈</a> · <a href="#codebase">代码构成</a>
 </p>
 
 **全栈开发 · LLM 应用 · Agent 编排 · 数据分析 · 机器学习**
 
-我把大模型当成执行体、自己当规格与验收的负责人：需求先写成 PRD，技术选型写明理由与替代方案，任务拆到带验收标准的条目，再放 Agent 去做——**能跑起来，也能讲清楚每一步为什么这么定。**
+<a id="highlights"></a>
 
-<a id="collab"></a>
-## `01` 与 LLM 协同开发
-
-不是把需求丢给模型等它发挥，而是把「规格 → 边界 → 分阶段任务 → 验收」先写成可核对的文档，让模型在约束里干活。
-
-| 环节 | 我的做法 | 仓库里的证据 |
-| :--- | :--- | :--- |
-| **规格先行** | 先写 PRD：定位、目标用户、功能优先级（P0/P1）、技术硬约束、术语表；把歧义在文档里消掉，模型才不需要猜 | [ai-market-sim PRD](https://github.com/Evan5321/ai-market-sim-finance/blob/main/docs/PRD.md) · [ClipPoems PRD](https://github.com/Evan5321/ClipPoems/blob/main/PRD_ClipPoems.md) |
-| **选型留痕** | 技术准备文档逐项写「为什么选它 / 替代方案是什么」；核心难点先做方案对比再定路线（画布 A. DOM / B. Canvas / C. SVG，定 M1 用 DOM 快速迭代、M2 迁 Canvas） | [开发准备文档](https://github.com/Evan5321/ClipPoems/blob/main/%E5%BC%80%E5%8F%91%E5%87%86%E5%A4%87%E6%96%87%E6%A1%A3_ClipPoems.md) · [DEV_READINESS](https://github.com/Evan5321/ai-market-sim-finance/blob/main/docs/DEV_READINESS.md) |
-| **任务可验收** | 任务清单拆到 Phase / 任务号，每条带优先级、依赖、**验收标准**与状态；先定义 DoD（合入 + 测试通过 + 无 lint/类型错误 + AC 达成），再允许进入下一阶段 | [TODO（含 AC 与状态）](https://github.com/Evan5321/ai-market-sim-finance/blob/main/docs/TODO.md) · [ClipPoems TODO](https://github.com/Evan5321/ClipPoems/blob/main/TODO_ClipPoems.md) |
-| **受限授权** | 给编码 Agent 只开当前任务需要的命令与目录（allow 白名单 + additionalDirectories），不放开整机执行权 | [.claude/settings.local.json](https://github.com/Evan5321/ClipPoems/blob/main/.claude/settings.local.json) |
-| **阶段交付** | 按 Phase 提交，每条提交对应一个可验证的能力切片；阶段验收不通过就回到任务层修，不往前堆 | ClipPoems 提交记录：`Phase 1.2 Corpus System Complete` → `Phase 2 GOOD` → `Phase 3 GOOD` → `Phase 6-7` |
-
-> 判断标准很简单：如果一份改动说不清「依据哪条需求、满足哪条验收」，那它就不算完成。
-
-<a id="agent"></a>
-## `02` Agent 全流程控制
-
-以 [ai-market-sim-finance](https://github.com/Evan5321/ai-market-sim-finance) 为例，一个多步 LLM 流水线要在**推进、回退、成本、失败**四个方向都可控，才敢交给真实用户。
-
-```
-入口选择 → 参数输入 → 画像生成 → 行为模拟 → 分析建议
-   entry      input      persona    simulation   analysis
-     └──────────┴────── 可推进 / 可回退 / 可复用产物 ───────┘
-```
-
-| 控制点 | 做法 | 代码 |
-| :--- | :--- | :--- |
-| **流程状态** | `Step` 枚举 + `WorkflowOrchestrator` 统一管理当前步骤、推进、回退与进度计算；改参数后回到上一步重跑，不重跑整条链 | [orchestrator.py](https://github.com/Evan5321/ai-market-sim-finance/blob/main/app/workflow/orchestrator.py) |
-| **模型接入** | `LLMProvider` Protocol 抽象 + `get_provider()` 工厂 + 五家适配器（DeepSeek / 硅基流动 / OpenAI / Anthropic / Gemini），切换厂商只改配置，上层业务零改动 | [provider.py](https://github.com/Evan5321/ai-market-sim-finance/blob/main/app/services/llm/provider.py) |
-| **提示词治理** | 模板按 `{name}_v{n}.txt` 版本化，system 前缀固定便于命中 Prompt Caching；改模板是升版本，不覆盖旧版本、不破坏已跑通的流程 | [prompts/manager.py](https://github.com/Evan5321/ai-market-sim-finance/blob/main/app/services/llm/prompts/manager.py) |
-| **并发与失败隔离** | 线程池批量调用 + 进度回调；单个任务失败只记录 `(任务号, 错误)`，不拖垮整批，其余结果照常返回 | [batch.py](https://github.com/Evan5321/ai-market-sim-finance/blob/main/app/services/llm/batch.py) |
-| **成本控制** | 每次调用记 `usage_log.jsonl`：优先取厂商返回的 usage 字段，取不到用 tiktoken 估算兜底；内置分模型价格表做费用估算，并设 `TOKEN_BUDGET_USD` 预算上限 | [usage.py](https://github.com/Evan5321/ai-market-sim-finance/blob/main/app/services/llm/usage.py) |
-| **降级与重试** | 超时、429、5xx 走退避重试；没配 Key 时不让流程崩，返回可读错误并走降级路径 | [provider.py](https://github.com/Evan5321/ai-market-sim-finance/blob/main/app/services/llm/provider.py) |
-| **可测性** | Fake Provider 替身：不消耗真实 Token、无需 API Key，就能跑完 86 项测试（含 5 项端到端集成），把「模型不确定性」挤出测试边界 | [tests/fakes](https://github.com/Evan5321/ai-market-sim-finance/tree/main/tests/fakes) |
+- **与 LLM 协同**：需求先写 PRD，选型留理由与替代方案，任务拆到带验收标准再交给模型执行
+- **Agent 授权与交付**：按任务最小授权，命令与目录走白名单，分阶段提交、逐阶段验收
+- **LLM 流水线控制**：状态机管推进与回退，Provider 抽象统一五家厂商，提示词版本化管理
+- **成本与可靠性**：批量并发且失败隔离，usage 记账控成本；Fake Provider 让 86 项测试无需真实 Key
 
 <a id="projects"></a>
-## `03` 精选项目
+
+## `01` 精选项目
 
 | 项目 | 它做什么 | 我在其中解决的问题 | 技术 |
 | :--- | :--- | :--- | :--- |
@@ -74,7 +44,8 @@
 > **正在构建** · **MapCreator**（尚未开源）— 本地优先的架空世界地图工具。Python + FastAPI + SQLite（FTS5）+ MapLibre GL JS + Terra Draw；先写契约、数据规范、21 条决策记录和验收标准，再逐任务实现。
 
 <a id="stack"></a>
-## `04` 技术栈
+
+## `02` 技术栈
 
 <p align="center">
   <img src="https://skillicons.dev/icons?i=py,java,cpp,c,ts,js,rust,mysql,latex,html,css,markdown&theme=dark" alt="languages" />
@@ -94,7 +65,8 @@
 | 工程 / 交付 | `Docker` · `Git` · `GitHub Actions` · `pytest` · `Prisma` · `Linux` | 容器化部署、CI、86 项测试、SQLite 数据层 |
 
 <a id="codebase"></a>
-## `05` 代码构成
+
+## `03` 代码构成
 
 <p align="center">
   <img src="readme_assets/card-overview.svg" width="680" alt="codebase overview" />
