@@ -1,46 +1,55 @@
 {
-  "generated_at": "2026-11-18T14:52:44+00:00",
+  "generated_at": "2026-11-25T02:12:25+00:00",
   "user": {
     "login": "Evan5321",
     "name": "Evan Lai",
     "created_at": "2025-05-03T14:25:54Z"
   },
   "totals": {
-    "repos": 8,
+    "repos": 9,
     "stars": 3,
     "forks": 0,
     "followers": 0,
-    "commits": 37
+    "commits": 59
   },
   "languages": {
     "repos": {
+      "Python": 4,
       "Java": 1,
       "Jupyter Notebook": 1,
-      "TypeScript": 1,
-      "Python": 2
+      "TypeScript": 1
     },
     "bytes": {
+      "Python": 464253,
+      "JavaScript": 101487,
+      "CSS": 15861,
+      "PowerShell": 6776,
+      "Shell": 3677,
+      "HTML": 47383,
       "Java": 51103,
       "C++": 39183,
       "TeX": 36432,
       "PLpgSQL": 8079,
       "C": 1931,
       "Jupyter Notebook": 175158,
-      "Python": 251999,
-      "TypeScript": 215275,
-      "CSS": 3601,
-      "JavaScript": 4056,
-      "Rust": 119,
-      "HTML": 43712
+      "TypeScript": 345626,
+      "Rust": 4128
     }
   },
   "projects": [
     {
-      "name": "Eavn5321",
+      "name": "MapCreator",
       "description": "",
-      "language": "",
+      "language": "Python",
       "stars": 0,
-      "updated_at": "2026-11-18T14:39:06Z"
+      "updated_at": "2026-11-23T03:23:23Z"
+    },
+    {
+      "name": "Evan5321",
+      "description": "",
+      "language": "Python",
+      "stars": 0,
+      "updated_at": "2026-11-24T03:55:41Z"
     },
     {
       "name": "Notes",
@@ -61,7 +70,7 @@
       "description": "",
       "language": "TypeScript",
       "stars": 1,
-      "updated_at": "2026-10-02T12:37:35Z"
+      "updated_at": "2026-11-22T15:28:18Z"
     },
     {
       "name": "ai-market-sim-finance",

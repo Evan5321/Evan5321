@@ -90,5 +90,5 @@
   </g>
   <line x1="40" y1="310" x2="652" y2="310" stroke="#1b2536" stroke-width="1"/>
   <text x="40" y="327" class="mono" font-size="10" fill="#4b5769">evidence: public repositories</text>
-  <text x="652" y="327" text-anchor="end" class="mono" font-size="10" fill="#4b5769">7 repos · 12 languages</text>
+  <text x="652" y="327" text-anchor="end" class="mono" font-size="10" fill="#4b5769">8 repos · 14 languages</text>
 </svg>
